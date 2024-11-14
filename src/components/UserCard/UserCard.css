@@ -1,0 +1,16 @@
+.user-card {
+  width: 300px;
+  padding: 0 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 3px #ccc;
+}
+
+.user-card-name {
+  font-size: 1.5rem;
+}
+
+.user-card-email {
+  font-size: 1rem;
+  color: #666;
+}

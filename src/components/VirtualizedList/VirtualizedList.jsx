@@ -1,28 +1,23 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import PropTypes from "prop-types";
-
-import { UserCard } from "..";
 
 export const VirtualizedList = ({
   items = [],
+  renderItem,
   itemHeight,
   containerHeight,
 }) => {
   const [scrollTop, setScrollTop] = useState(0);
-
   const startIndex = Math.floor(scrollTop / itemHeight);
   const endIndex = Math.min(
     startIndex + Math.ceil(containerHeight / itemHeight),
     items.length
   );
-
   const visibleItems = items.slice(startIndex, endIndex);
-  const invisibleItemsHeight =
-    (startIndex + visibleItems.length - endIndex) * itemHeight;
 
-  const handleScroll = (event) => {
+  const handleScroll = useCallback((event) => {
     setScrollTop(event.target.scrollTop);
-  };
+  }, []);
 
   return (
     <div
@@ -37,11 +32,8 @@ export const VirtualizedList = ({
             top: `${startIndex * itemHeight}px`,
           }}
         >
-          {visibleItems.map((item) => (
-            <UserCard key={item.id} {...item} />
-          ))}
+          {visibleItems.map((item, index) => renderItem(item, index))}
         </div>
-        <div style={{ height: `${invisibleItemsHeight}px` }} />
       </div>
     </div>
   );
@@ -49,6 +41,7 @@ export const VirtualizedList = ({
 
 VirtualizedList.propTypes = {
   items: PropTypes.array.isRequired,
+  renderItem: PropTypes.func.isRequired,
   itemHeight: PropTypes.number.isRequired,
   containerHeight: PropTypes.number.isRequired,
 };

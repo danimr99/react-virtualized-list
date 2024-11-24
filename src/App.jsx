@@ -7,7 +7,7 @@ import { UserCard, VirtualizedList } from "./components";
 const USERS_SIZE = 100_000;
 
 scan({
-  enabled: import.meta.env.DEV,
+  enabled: false, // <-- Enable React Scan feature
   alwaysShowLabels: true,
   log: true,
 });
@@ -23,7 +23,7 @@ export const App = () => {
   return (
     <VirtualizedList
       items={users}
-      visibleItemsCount={3}
+      visibleItemsCount={5}
       renderItem={renderUserCard}
     />
   );

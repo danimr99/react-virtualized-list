@@ -1,7 +1,7 @@
 import { memo } from "react";
 import PropTypes from "prop-types";
 
-import { useVirtualizedList } from "./useVirtualizedList";
+import { useVirtualization } from "./hooks";
 
 export const VirtualizedList = memo(function VirtualizedList({
   items = [],
@@ -16,7 +16,7 @@ export const VirtualizedList = memo(function VirtualizedList({
     visibleStartIndex,
     visibleItems,
     handleScroll,
-  } = useVirtualizedList({
+  } = useVirtualization({
     items,
     visibleItemsCount,
     allowSmoothTransition,

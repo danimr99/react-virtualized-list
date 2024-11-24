@@ -1,6 +1,6 @@
 import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
 
-export const useVirtualizedList = ({
+export const useVirtualization = ({
   items = [],
   visibleItemsCount,
   allowSmoothTransition,
@@ -48,6 +48,7 @@ export const useVirtualizedList = ({
     containerHeight,
     itemHeight,
     visibleStartIndex,
+    visibleEndIndex,
     visibleItems,
     handleScroll,
   };

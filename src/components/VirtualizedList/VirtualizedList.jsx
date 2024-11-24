@@ -1,23 +1,34 @@
-import { useCallback, useState } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 
 export const VirtualizedList = ({
   items = [],
+  visibleItemsCount = 5,
+  allowSmoothTransition = true,
   renderItem,
-  itemHeight,
-  containerHeight,
 }) => {
   const [scrollTop, setScrollTop] = useState(0);
+  const [itemHeight, setItemHeight] = useState(1);
+  const itemRef = useRef(null);
+
+  const containerHeight = itemHeight * visibleItemsCount;
   const startIndex = Math.floor(scrollTop / itemHeight);
   const endIndex = Math.min(
-    startIndex + Math.ceil(containerHeight / itemHeight),
+    startIndex + visibleItemsCount + (allowSmoothTransition ? 1 : 0),
     items.length
   );
+
   const visibleItems = items.slice(startIndex, endIndex);
 
   const handleScroll = useCallback((event) => {
     setScrollTop(event.target.scrollTop);
   }, []);
+
+  useLayoutEffect(() => {
+    if (itemRef.current) {
+      setItemHeight(itemRef.current.clientHeight);
+    }
+  }, [itemRef]);
 
   return (
     <div
@@ -32,7 +43,9 @@ export const VirtualizedList = ({
             top: `${startIndex * itemHeight}px`,
           }}
         >
-          {visibleItems.map((item, index) => renderItem(item, index))}
+          {visibleItems.map((item, index) => {
+            return renderItem(item, index === 0 ? itemRef : null, index);
+          })}
         </div>
       </div>
     </div>
@@ -41,7 +54,7 @@ export const VirtualizedList = ({
 
 VirtualizedList.propTypes = {
   items: PropTypes.array.isRequired,
+  visibleItemsCount: PropTypes.number,
+  allowSmoothTransition: PropTypes.bool,
   renderItem: PropTypes.func.isRequired,
-  itemHeight: PropTypes.number.isRequired,
-  containerHeight: PropTypes.number.isRequired,
 };

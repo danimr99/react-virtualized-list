@@ -3,6 +3,17 @@ import PropTypes from "prop-types";
 
 import "./UserCard.css";
 
+/**
+ * UserCard
+ *
+ * User card that displays user name and email address in a card format.
+ *
+ * @component
+ * @param {string} name - User name.
+ * @param {string} email - User email.
+ *
+ * @returns {JSX.Element}
+ */
 export const UserCard = memo(
   forwardRef(function UserCard({ name, email }, ref) {
     return (

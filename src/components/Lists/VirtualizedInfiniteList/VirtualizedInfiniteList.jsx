@@ -29,7 +29,8 @@ import "./VirtualizedInfiniteList.css";
  * @component
  * @param {Array} items - List of items to render.
  * @param {Number} visibleItemsCount - Number of items to render at a time.
- * @param {Boolean} allowSmoothTransition - Whether to allow smooth transition.
+ * @param {Boolean} allowSmoothTransition - Whether to allow smooth transition. It adds an extra item to the visible items
+ *  list on transitioning between edge items.
  * @param {Function} renderItem - Function to render each item.
  * @param {Function} onReachEnd - Function to call when reaching the end of the list.
  *
